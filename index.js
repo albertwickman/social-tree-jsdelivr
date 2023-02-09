@@ -68,6 +68,7 @@ async function setDocumentSubmission() {
     let inputFirstName = document.getElementById('fName').value;
     let inputLastName = document.getElementById('lName').value;
     let email = document.getElementById('epost').value;
+    let epost = document.getElementById('epost').value;
     let myHTML = `<body><section style='margin:auto;width:500px;padding:75px;text-align:center;'><div style='margin-bottom:50px;'><img src='https://1000logos.net/wp-content/uploads/2021/11/Nike-Logo.png' width='300';></div><div class='text-section'><h1 id='welcome'>Välkommen till Social Tree, ${inputFirstNameId} ${inputLastNameId}! </h1><p>Social Tree önskar dig varmt välkommen till Auktionsverket den 28 januari.</p></div><div style='margin-top:50px;'><img src='https://1000logos.net/wp-content/uploads/2021/11/Nike-Logo.png' width='300';></div></section></body>`
     let count = 0;
     const querySnapshot = await getDocs(collection(firestore, "submissions"));
@@ -78,6 +79,7 @@ async function setDocumentSubmission() {
     await setDoc(doc(firestore, "submissions", count + '. ' + inputFirstNameId + ' ' + inputLastNameId), {
     		firstName: inputFirstName,
         lastName: inputLastName,
+	email: epost,
         to: [email],
 				message: {
   			subject: 'Bekräftelse Social Tree',
@@ -116,7 +118,7 @@ async function findAlreadyExistingId() {
         });
          
          querySnapshotSubs.forEach((doc) => {
-            if (doc.data()['to'] === epost.value) {
+            if (doc.data()['email'] === epost.value) {
                 isFound = true;
                 alert('You are already on the guest list!');
                 return false;
